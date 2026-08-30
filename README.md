@@ -27,6 +27,7 @@ Automated generation tracking, system snapshots, declarative derivations, and do
 
 | Generation | Date | Kernel | Major Highlights |
 | :--- | :--- | :--- | :--- |
+| **Gen 22** | 2026-08-30 | `6.18.46` | SDDM NieR Practical HUD Suite + KDE Plasma 6 Lock Screen package, ORV System Status Window, Show/Hide password toggle, live CapsLock detection, crystal-clear video wallpaper, merged power grid |
 | **Gen 17** | 2026-08-26 | `6.18.46` | Zen Browser 1.21.15b + transparent CSS, Keyd PrtSc Spectacle snip, 1:1 Limine layout, /boot pruning (83% free), Meta+D shortcut fix |
 | **Gen 16** | 2026-08-26 | `6.18.46` | Limine console ASCII tofu fix, LainWired color scheme system-wide package, login persistence |
 | **Gen 15** | 2026-08-26 | `6.18.46` | PipeWire Controller (pwcc) package, studio mic 5-stage DSP, smart video wallpaper SDDM |
