@@ -21,7 +21,22 @@ in
   # Bootloader Configuration (Limine)
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 3;
+  boot.loader.timeout = 2;
+
+  # Silent & Fast Boot Configuration
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "boot.shell_on_fail"
+    "loglevel=3"
+    "rd.systemd.show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
+    "systemd.show_status=blank"
+    "vt.global_cursor_default=0"
+  ];
 
   boot.loader.limine = {
     enable = true;
@@ -265,6 +280,10 @@ in
     fish
     fastfetch
     zoxide
+    lsd
+    bat
+    vivid
+    fzf
     copyq
     wl-clipboard
     xclip
