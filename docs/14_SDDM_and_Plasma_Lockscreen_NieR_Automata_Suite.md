@@ -74,14 +74,9 @@ graph TD
 * **QML Entrypoint**: `contents/lockscreen/LockScreen.qml`
 * **Main UI Component**: `contents/lockscreen/LockScreenUi.qml`
 
-### Integration Details:
-1. **KDE PAM Authenticator**:
-   - Connects to `authenticator.respond(pwInput.text)` upon pressing `Enter` or clicking `▶`.
-   - Listens to `authenticator.onSucceeded -> Qt.quit()` to dismiss the locker and unlock the Wayland desktop seamlessly.
-   - Listens to `authenticator.onFailed -> ACCESS DENIED` with a red glitch animation.
-2. **Smart Video Wallpaper Overlay**:
-   - Integrates cleanly on top of `io.github.luisbocanegra.smartvideowallpaper` rendering `/home/l41n-pr0t0/Videos/Untitled design.mp4`.
-   - Translucent glass panels (`rgba(20, 19, 16, 0.94)`) protect text readability without degrading video colors.
+3. **Shell Package Architecture (Desktop + Lockscreen Coexistence)**:
+   - In Plasma 6, `org.kde.plasma.desktop` governs both the running desktop workspace (`views/Desktop.qml`, `views/Panel.qml`, `explorer/`, `configuration/`) and the lock screen (`lockscreen/LockScreen.qml`, `lockscreen/LockScreenUi.qml`).
+   - When customizing the lockscreen in user space (`~/.local/share/plasma/shells/org.kde.plasma.desktop/`), all desktop view directories are preserved alongside `contents/lockscreen/` so `plasmashell` initializes the desktop panels, widgets, and wallpaper flawlessly.
 
 ---
 
