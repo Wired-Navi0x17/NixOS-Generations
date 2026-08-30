@@ -257,6 +257,8 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile.
+  environment.etc."xdg/kdeglobals".source = "${lainwired-color-scheme}/share/color-schemes/LainWired.colors";
+
   environment.systemPackages = with pkgs; [
     kitty
     vscode
