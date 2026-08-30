@@ -64,7 +64,7 @@ PREV_CMD=$(echo "$PREV_DATA" | cut -d'|' -f3)
 KERNEL_VER=$(uname -r)
 
 cat << LIMINECONF > /boot/limine/limine.conf
-timeout: 3
+timeout: 7
 editor_enabled: no
 hash_mismatch_panic: no
 graphics: yes
@@ -151,4 +151,4 @@ for f in /boot/limine/kernels/*; do
   esac
 done
 
-echo "Limine sync completed. Boot partition pruned and optimized."
+echo "Limine sync completed with 7s timeout."
