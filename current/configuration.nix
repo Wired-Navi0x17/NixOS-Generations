@@ -155,20 +155,6 @@ in
       "nofail"
     ];
   };
-
-  # Hardware-level key remapping for Lenovo Legion PrintScreen/Snipping key
-  services.udev.extraHwdb = ''
-    evdev:name:Ideapad extra buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
-     KEYBOARD_KEY_46=print
-
-    evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
-     KEYBOARD_KEY_46=print
-
-    evdev:atkbd:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
-     KEYBOARD_KEY_46=print
-     KEYBOARD_KEY_b7=print
-  '';
-
   # Keyd configuration
   services.keyd = {
     enable = true;
@@ -176,7 +162,7 @@ in
       ids = [ "*" ];
       settings = {
         main = {
-          selectivescreenshot = "print";
+          sysrq = "print";
         };
       };
     };
@@ -258,7 +244,7 @@ in
     description = "l41n-pr0t0";
     initialPassword = "lain";
     shell = pkgs.fish;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" ];
     packages = with pkgs; [
       kdePackages.kate
       kdePackages.kamoso
