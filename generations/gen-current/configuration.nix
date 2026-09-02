@@ -161,8 +161,14 @@ in
     keyboards.default = {
       ids = [ "*" ];
       settings = {
+        aliases = {
+          f16 = "selectivescreenshot";
+        };
         main = {
+          f16 = "print";
+          selectivescreenshot = "print";
           sysrq = "print";
+          print = "print";
         };
       };
     };
