@@ -19,17 +19,36 @@
 
 ---
 
-## ⌨️ 2. Keyd Hardware Remapping & Spectacle Integration
+## ⌨️ 2. Hardware Keyboard Remapping & Spectacle Integration
 
-Lenovo Legion keyboards emit `KEY_SELECTIVESCREENSHOT` (code 590) on the dedicated screenshot key.
+Lenovo Legion keyboards emit `KEY_SELECTIVESCREENSHOT` (code 634 / `0x27a`) on the dedicated screenshot key via ACPI device `/dev/input/event8` (`Ideapad extra buttons`).
 
-- **Keyd Service**: `services.keyd.enable = true;` in `/etc/nixos/configuration.nix`.
-- **Keyd Mapping**: `~/.config/keyd/default.conf`
-  ```ini
-  [ids]
-  *
+### 🛠️ Hardware-Level Remapping via udev hwdb
+Because `keyd` only supports keycodes up to 255 and rejects keycode 634 (`selectivescreenshot`), the key is remapped directly at the Linux kernel driver layer in `/etc/nixos/configuration.nix`:
 
-  [main]
-  selectivescreenshot = print
-  ```
-- **KDE Spectacle Shortcut**: `~/.config/kglobalshortcutsrc` maps `RectangularRegionScreenShot` and `_launch` to `Print` and `Meta+Shift+S`, triggering instantaneous interactive screen snipping.
+```nix
+services.udev.extraHwdb = ''
+  evdev:name:Ideapad extra buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
+   KEYBOARD_KEY_46=print
+
+  evdev:name:ThinkPad Extra Buttons:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
+   KEYBOARD_KEY_46=print
+
+  evdev:atkbd:dmi:bvn*:bvr*:bd*:svnLENOVO*:pn*:*
+   KEYBOARD_KEY_46=print
+   KEYBOARD_KEY_b7=print
+'';
+```
+- **Driver**: `ideapad_laptop` intercepts hardware scancode `46` and translates it into `KEY_PRINT`.
+
+### 🎯 KDE Spectacle Shortcut Integration
+In `~/.config/kglobalshortcutsrc` and live KWin memory, `RectangularRegionScreenShot` is registered to trigger on both `Print`, `Launch (7)`, and `Meta+Shift+S`:
+
+```ini
+[org.kde.spectacle.desktop]
+RectangularRegionScreenShot=Print\tLaunch (7)\tMeta+Shift+S,Print\tLaunch (7)\tMeta+Shift+S,Capture Rectangular Region
+_launch=none,none,Launch Spectacle
+```
+
+- When the physical scissor/snipping button is pressed, KDE Spectacle launches interactive rectangular screen snipping immediately.
+
