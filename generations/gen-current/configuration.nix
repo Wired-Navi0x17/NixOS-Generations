@@ -23,21 +23,6 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 2;
 
-  # Silent & Fast Boot Configuration
-  boot.consoleLogLevel = 0;
-  boot.initrd.verbose = false;
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-    "boot.shell_on_fail"
-    "loglevel=3"
-    "rd.systemd.show_status=false"
-    "rd.udev.log_level=3"
-    "udev.log_priority=3"
-    "systemd.show_status=blank"
-    "vt.global_cursor_default=0"
-  ];
-
   boot.loader.limine = {
     enable = true;
     maxGenerations = 2;
@@ -104,6 +89,18 @@ in
   ];
 
   # Audio Kernel Modules & Power Management
+  boot.kernelParams = [
+    "pcie_port_pm=off"
+    "pci=noaer"
+  ];
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    lenovo-legion-module
+  ];
+  boot.kernelModules = [
+    "legion-laptop"
+  ];
+
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=0
   '';
@@ -275,6 +272,7 @@ in
   environment.etc."xdg/kdeglobals".source = "${lainwired-color-scheme}/share/color-schemes/LainWired.colors";
 
   environment.systemPackages = with pkgs; [
+    libreoffice
     kitty
     vscode
     fish
@@ -298,6 +296,7 @@ in
     plasma-smart-video-wallpaper-reborn
     lainwired-color-scheme
     keyd
+    lm_sensors
     (callPackage ./pkgs/zen-browser {})
     pciutils
     alsa-utils

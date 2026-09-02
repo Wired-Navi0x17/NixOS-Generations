@@ -64,9 +64,10 @@ PREV_CMD=$(echo "$PREV_DATA" | cut -d'|' -f3)
 KERNEL_VER=$(uname -r)
 
 cat << LIMINECONF > /boot/limine/limine.conf
-timeout: 2
+timeout: 7
 editor_enabled: no
 hash_mismatch_panic: no
+remember_last_entry: yes
 graphics: yes
 default_entry: 1
 $WALLPAPER_LINE
